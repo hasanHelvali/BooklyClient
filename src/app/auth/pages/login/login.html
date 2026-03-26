@@ -1,0 +1,132 @@
+<div class="login-wrapper">
+  <!-- sol panel -->
+  <div class="left-panel">
+    <div class="left-content">
+      <img src="images/main-logo.png" alt="Bookly" class="logo" />
+      <!-- public/ klasörü Angular build sırasında otomatik olarak root'a kopyalanır, göreceli path yazmana gerek yok -->
+      <p class="slogan">Bir Sonraki Harika Kitabın Bir Tık Uzağında...</p>
+    </div>
+  </div>
+
+  <!-- sağ panel  -->
+  <div class="right-panel">
+    <div class="forms-wrapper">
+      <div class="form-container" [class.hidden]="!isSignIn" [formGroup]="signInForm">
+        <h2 class="form-title">Hoşgeldiniz</h2>
+        <p class="form-subtitle">Hesabınıza giriş yapın</p>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            pInputText
+            id="email"
+            type="email"
+            placeholder="Enter your email"
+            formControlName="email"
+          />
+          @if (signInForm.get('email')?.invalid && signInForm.get('email')?.touched) {
+            <small class="error-msg">Geçerli bir email adresi giriniz.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="password">Şifre</label>
+          <p-password
+            id="password"
+            placeholder="Enter your password"
+            [feedback]="false"
+            [toggleMask]="true"
+            formControlName="password"
+          />
+          @if (signInForm.get('password')?.invalid && signInForm.get('password')?.touched) {
+            <small class="error-msg">Şifre en az 6 karakter olmalıdır.</small>
+          }
+        </div>
+
+        <div class="field-row">
+          <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+
+        <button
+          pButton
+          label="Sign In"
+          class="login-btn"
+          [disabled]="signInForm.invalid"
+          (click)="onSignIn()"
+        ></button>
+
+        <p class="register-text">Bir Hesabın Yok Mu? <a (click)="toggleForm()">Sign Up</a></p>
+      </div>
+
+      <div class="form-container" [class.hidden]="isSignIn" [formGroup]="signUpForm">
+        <h2 class="form-title">Hesap Oluştur</h2>
+        <p class="form-subtitle">Bookly'ye katıl</p>
+
+        <div class="field">
+          <label for="name">Ad</label>
+          <input
+            pInputText
+            id="name"
+            type="text"
+            placeholder="Adınızı Girin"
+            formControlName="name"
+          />
+          @if (signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched) {
+            <small class="error-msg">Ad alanı zorunludur.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="lastname">Soyad</label>
+          <input
+            pInputText
+            id="lastname"
+            type="text"
+            placeholder="Soyadınızı Girin"
+            formControlName="lastName"
+          />
+          @if (signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched) {
+            <small class="error-msg">Soyad alanı zorunludur.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="registerEmail">Email</label>
+          <input
+            pInputText
+            id="registerEmail"
+            type="email"
+            placeholder="Email Adresinizi Girin"
+            formControlName="email"
+          />
+          @if (signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched) {
+            <small class="error-msg">Geçerli bir email adresi giriniz.</small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="registerPassword">Şifre</label>
+          <p-password
+            id="registerPassword"
+            placeholder="Şifrenizi Girin"
+            [toggleMask]="true"
+            formControlName="password"
+          />
+          @if (signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched) {
+            <small class="error-msg">Şifre en az 6 karakter ve 1 rakam içermelidir.</small>
+          }
+        </div>
+
+        <button
+          pButton
+          label="Sign Up"
+          class="login-btn"
+          [disabled]="signUpForm.invalid"
+          (click)="onSignUp()"
+        ></button>
+
+        <p class="register-text">Zaten Hesabın Var mı? <a (click)="toggleForm()">Sign In</a></p>
+      </div>
+    </div>
+  </div>
+</div>

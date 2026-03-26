@@ -1,0 +1,144 @@
+ :host {
+    display: block;
+    min-height: 100vh;
+    background-color: #e3c4c4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .login-wrapper {
+    display: flex;
+    width: 900px;
+    min-height: 560px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(11, 0, 0, 0.4);
+  }
+
+  .left-panel {
+    width: 45%;
+    background-color: #272727;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 2rem;
+    text-align: center  ;
+    align-items: center;
+  }
+
+  .right-panel {
+    width: 55%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 2.5rem;
+  }
+
+  .logo{
+    background-color: rgb(5, 0, 0);
+    padding: 1rem;
+  }
+
+  .slogan {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    text-align: center;
+  }
+   .form-container {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .form-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #272727;
+    margin-bottom: 0.3rem;
+  }
+
+  .form-subtitle {
+    color: #aaaaaa;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+  }
+
+  .field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #272727;
+    margin-bottom: 0.4rem;
+  }
+
+  .field input,
+  .field p-password {
+    width: 100%;
+  }
+
+  .field-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+  }
+
+  .forgot-link {
+    font-size: 0.85rem;
+    color: #F86D72;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .login-btn {
+    width: 100%;
+    background-color: #F86D72 !important;
+    border-color: #F86D72 !important;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+  }
+
+  .register-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #aaaaaa;
+  }
+
+  .register-text a {
+    color: #F86D72;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .forms-wrapper {
+    display: grid;
+    width: 100%;
+  }
+
+  .forms-wrapper .form-container {
+    grid-area: 1 / 1;
+  }
+
+  .hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .error-msg {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+  }
