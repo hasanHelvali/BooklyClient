@@ -4,8 +4,13 @@ export interface SignInRequest {
 }
 
 export interface SignUpRequest {
-  name: string;
-  lastName: string;
-  email: string;
-  password: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  password: string | null;
+}
+
+export interface TokenResponse {
+  token: string;
+  expiresAt: string;
 }

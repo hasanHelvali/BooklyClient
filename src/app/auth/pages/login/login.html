@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <div class="login-wrapper">
   <!-- sol panel -->
   <div class="left-panel">
@@ -69,9 +71,9 @@
             id="name"
             type="text"
             placeholder="Adınızı Girin"
-            formControlName="name"
+            formControlName="firstName"
           />
-          @if (signUpForm.get('name')?.invalid && signUpForm.get('name')?.touched) {
+          @if (signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched) {
             <small class="error-msg">Ad alanı zorunludur.</small>
           }
         </div>
