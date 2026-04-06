@@ -1,30 +1,45 @@
-<div class="p-4">
+<p-toast position="top-right" />
+<div class="container py-4" style="max-width: 600px">
   <div class="d-flex align-items-center gap-3 mb-4">
     <p-button icon="pi pi-arrow-left" severity="secondary" routerLink="/admin/products" />
-    <h2 class="fw-bold">{{ isEditMode ? 'Ürün Düzenle' : 'Yeni Ürün Ekle' }}</h2>
+    <h4 class="fw-bold mb-0">{{ isEditMode ? 'Ürün Düzenle' : 'Yeni Ürün Ekle' }}</h4>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3">
-    <div class="d-flex flex-column gap-1">
-      <label>Kitap Adı</label>
-      <input pInputText formControlName="name" />
-    </div>
-    <div class="d-flex flex-column gap-1">
-      <label>Yazar</label>
-      <input pInputText formControlName="author" />
-    </div>
-    <div class="d-flex flex-column gap-1">
-      <label>Fiyat</label>
-      <p-inputnumber formControlName="price" mode="currency" currency="USD" />
-    </div>
-    <div class="d-flex flex-column gap-1">
-      <label>Stok</label>
-      <p-inputnumber formControlName="stock" />
-    </div>
-    <div class="d-flex flex-column gap-1">
-      <label>Kategori</label>
-      <p-select [options]="categories" formControlName="category" placeholder="Kategori seç" />
-    </div>
-    <p-button type="submit" label="Kaydet" [disabled]="form.invalid" />
-  </form>
+  <div class="card p-4 shadow-sm">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-3">
+      <div class="d-flex flex-column gap-1">
+        <label class="fw-semibold">Kitap Adı</label>
+        <input pInputText formControlName="name" class="w-100" />
+      </div>
+      <div class="d-flex flex-column gap-1">
+        <label class="fw-semibold">Yazar</label>
+        <input pInputText formControlName="author" class="w-100" />
+      </div>
+      <div class="d-flex flex-column gap-1">
+        <label class="fw-semibold">Fiyat</label>
+        <p-inputnumber
+          [formControl]="form.controls.price"
+          mode="currency"
+          currency="TRY"
+          styleClass="w-100"
+        />
+      </div>
+      <div class="d-flex flex-column gap-1">
+        <label class="fw-semibold">Stok</label>
+        <p-inputnumber [formControl]="form.controls.stock" styleClass="w-100" />
+      </div>
+      <div class="d-flex flex-column gap-1">
+        <label class="fw-semibold">Kategori</label>
+        <p-select
+          [options]="categories"
+          formControlName="category"
+          placeholder="Kategori seç"
+          styleClass="w-100"
+        />
+      </div>
+      <div class="d-flex justify-content-end mt-2">
+        <p-button type="submit" label="Kaydet" icon="pi pi-check" [disabled]="form.invalid" />
+      </div>
+    </form>
+  </div>
 </div>
