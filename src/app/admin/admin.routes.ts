@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { AdminLayout } from './layout/admin-layout/admin-layout';
+import { adminGuard } from '../core/guards/admin.guard';
 
 export const adminRoutes: Routes = [
   {
     path: '',
     component: AdminLayout,
+    canActivate: [adminGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
       {

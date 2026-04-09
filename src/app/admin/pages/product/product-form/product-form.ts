@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Button } from 'primeng/button';
 import { InputNumber } from 'primeng/inputnumber';
 import { Select } from 'primeng/select';
-import { CreateProductRequest } from '../../../../core/models/product.model';
+import { CreateProductRequest, UpdateProductRequest } from '../../../../core/models/product.model';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
@@ -36,6 +36,7 @@ export class ProductForm implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private messageService = inject(MessageService);
+  productId: string | null = null;
   ngOnInit(): void {
     this.messageService.add({
       severity: 'success',
@@ -44,6 +45,7 @@ export class ProductForm implements OnInit {
     });
     const id = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!id;
+    this.productId = id;
     if (id) {
       this.productService.getById(id).subscribe({
         next: (res) => {
@@ -76,7 +78,7 @@ export class ProductForm implements OnInit {
     { label: 'Mantık', value: 'Mantık' },
   ];
 
-  form = this.fb.group({
+  form = this.fb.nonNullable.group({
     name: ['', Validators.required],
     author: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
@@ -86,17 +88,33 @@ export class ProductForm implements OnInit {
 
   onSubmit(): void {
     if (this.form.invalid) return;
-    const data = this.form.getRawValue() as CreateProductRequest;
-    this.productService.create(data).subscribe({
-      next: () => this.router.navigate(['/admin/products']),
-      error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Hata',
-          detail: 'Ürün oluşturulamadı',
-        });
-        console.error('Product creation failed:', err);
-      },
-    });
+    if (this.isEditMode) {
+      const data: UpdateProductRequest = {
+        id: this.productId,
+        ...(this.form.getRawValue() as any),
+      };
+      this.productService.update(data).subscribe({
+        next: () => this.router.navigate(['/admin/products']),
+        error: (err) =>
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Hata',
+            detail: 'Ürün güncellenemedi',
+          }),
+      });
+    } else {
+      const data = this.form.getRawValue() as CreateProductRequest;
+      this.productService.create(data).subscribe({
+        next: () => this.router.navigate(['/admin/products']),
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Hata',
+            detail: 'Ürün oluşturulamadı',
+          });
+          console.error('Product creation failed:', err);
+        },
+      });
+    }
   }
 }

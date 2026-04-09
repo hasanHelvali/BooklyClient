@@ -51,12 +51,13 @@ export class LoginComponent {
           localStorage.setItem('token', response.token);
           const decoded: any = jwtDecode(response.token);
           const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-          if (role === 'Admin') {
+          const roleArr: string[] = Array.isArray(role) ? role : [role];
+          debugger;
+          if (roleArr.some((r) => r.toLowerCase() === 'admin')) {
             this.router.navigate(['/admin/dashboard']);
           } else {
             this.router.navigate(['/']);
           }
-          this.router.navigate(['/admin/dashboard']);
           this.messageService.add({
             severity: 'success',
             summary: 'Başarılı',
@@ -67,7 +68,7 @@ export class LoginComponent {
           this.messageService.add({
             severity: 'error',
             summary: 'Başarısız',
-            detail: 'Giriş Başarısız.',
+            detail: error.error?.message || 'Giriş başarısız.',
           });
           console.error('Login failed:', error);
         },

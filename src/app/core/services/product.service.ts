@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environments';
-import { CreateProductRequest, ProductResponse } from '../models/product.model';
+import {
+  CreateProductRequest,
+  ProductResponse,
+  UpdateProductRequest,
+} from '../models/product.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -21,5 +25,9 @@ export class ProductService {
 
   getById(id: string): Observable<ProductResponse> {
     return this.http.get<ProductResponse>(`${this.productUrl}/GetProductById/${id}`);
+  }
+
+  update(request: UpdateProductRequest): Observable<any> {
+    return this.http.put(`${this.productUrl}/UpdateProduct`, request);
   }
 }
