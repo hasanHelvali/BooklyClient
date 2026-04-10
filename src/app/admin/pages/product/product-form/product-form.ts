@@ -9,6 +9,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProductService } from '../../../../core/services/product.service';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-product-form',
   imports: [
@@ -94,23 +95,39 @@ export class ProductForm implements OnInit {
         ...(this.form.getRawValue() as any),
       };
       this.productService.update(data).subscribe({
-        next: () => this.router.navigate(['/admin/products']),
-        error: (err) =>
+        next: () => {
+          this.router.navigate(['/admin/products'], { state: { updated: true } });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Başarılı',
+            detail: 'Ürün güncellendi',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Hata',
-            detail: 'Ürün güncellenemedi',
-          }),
+            detail: `${err.error.error || 'Ürün güncellenemedi'}`,
+          });
+          console.error('Product update failed:', err);
+        },
       });
     } else {
       const data = this.form.getRawValue() as CreateProductRequest;
       this.productService.create(data).subscribe({
-        next: () => this.router.navigate(['/admin/products']),
-        error: (err) => {
+        next: () => {
+          this.router.navigate(['/admin/products'], { state: { created: true } });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Başarılı',
+            detail: 'Ürün oluşturuldu',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Hata',
-            detail: 'Ürün oluşturulamadı',
+            detail: `${err.error.error || 'Ürün oluşturulamadı'}`,
           });
           console.error('Product creation failed:', err);
         },

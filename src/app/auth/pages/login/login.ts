@@ -65,6 +65,7 @@ export class LoginComponent {
           });
         },
         error: (error) => {
+          debugger;
           this.messageService.add({
             severity: 'error',
             summary: 'Başarısız',

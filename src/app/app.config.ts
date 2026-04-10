@@ -6,6 +6,7 @@ import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { LoadingInterceptor } from './core/interceptors/loadingInterceptor';
 import { AuthInterceptor } from './core/interceptors/authInterceptor';
+import { MessageService } from 'primeng/api';
 
 //  app.config.ts = uygulamanın çalışması için gereken global servislerin listesi. Router, animasyon, HTTP client, PrimeNG hepsi buraya kaydolur.
 export const appConfig: ApplicationConfig = {
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
       },
     }), // PrimeNG'i uygulamaya tanıt, hangi temayı kullan söyle
     provideHttpClient(withInterceptors([AuthInterceptor, LoadingInterceptor])),
+    MessageService,
   ],
 };
