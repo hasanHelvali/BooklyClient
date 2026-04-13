@@ -16,4 +16,13 @@ export class AuthService {
     debugger;
     return this.http.post<void>(`${this.API_URL}/Register`, request);
   }
+
+  refreshToken(refreshToken: string): Observable<TokenResponse> {
+    return this.http.post<TokenResponse>(`${this.API_URL}/RefreshToken`, { refreshToken });
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+  }
 }

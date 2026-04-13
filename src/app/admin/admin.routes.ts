@@ -25,6 +25,21 @@ export const adminRoutes: Routes = [
         loadComponent: () =>
           import('./pages/product/product-form/product-form').then((m) => m.ProductForm),
       },
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('./pages/category/category-list/category-list').then((m) => m.CategoryList),
+      },
+      {
+        path: 'categories/add',
+        loadComponent: () =>
+          import('./pages/category/category-form/category-form').then((m) => m.CategoryForm),
+      },
+      {
+        path: 'categories/edit/:id',
+        loadComponent: () =>
+          import('./pages/category/category-form/category-form').then((m) => m.CategoryForm),
+      },
     ],
   },
 ];

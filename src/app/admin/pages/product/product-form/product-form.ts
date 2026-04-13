@@ -10,6 +10,8 @@ import { MessageService } from 'primeng/api';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProductService } from '../../../../core/services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CategoryService } from '../../../../core/services/category.service';
+import { CategoryResponse } from '../../../../core/models/category.model';
 @Component({
   selector: 'app-product-form',
   imports: [
@@ -37,12 +39,17 @@ export class ProductForm implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private messageService = inject(MessageService);
+  private categoryService = inject(CategoryService);
   productId: string | null = null;
+  categories: CategoryResponse[] = [];
   ngOnInit(): void {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Test',
-      detail: 'Toast çalışıyor',
+    // this.messageService.add({
+    //   severity: 'success',
+    //   summary: 'Test',
+    //   detail: 'Toast çalışıyor',
+    // });
+    this.categoryService.getAll().subscribe({
+      next: (res) => (this.categories = res),
     });
     const id = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!id;
@@ -71,13 +78,13 @@ export class ProductForm implements OnInit {
   }
 
   isEditMode = false;
-  categories = [
-    { label: 'Roman', value: 'Roman' },
-    { label: 'Tarih', value: 'Tarih' },
-    { label: 'Fen', value: 'Fen' },
-    { label: 'Felsefe', value: 'Felsefe' },
-    { label: 'Mantık', value: 'Mantık' },
-  ];
+  // categories = [
+  //   { label: 'Roman', value: 'Roman' },
+  //   { label: 'Tarih', value: 'Tarih' },
+  //   { label: 'Fen', value: 'Fen' },
+  //   { label: 'Felsefe', value: 'Felsefe' },
+  //   { label: 'Mantık', value: 'Mantık' },
+  // ];
 
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],

@@ -49,6 +49,7 @@ export class LoginComponent {
         next: (response) => {
           console.log('Login successful:', response);
           localStorage.setItem('token', response.token);
+          localStorage.setItem('refreshToken', response.refreshToken);
           const decoded: any = jwtDecode(response.token);
           const role = decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
           const roleArr: string[] = Array.isArray(role) ? role : [role];

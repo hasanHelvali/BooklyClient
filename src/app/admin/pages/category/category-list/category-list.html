@@ -1,1 +1,30 @@
-<p>category-list works!</p>
+<div class="p-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Kategoriler</h2>
+    <p-button label="Yeni Kategori" icon="pi pi-plus" routerLink="/admin/categories/add"></p-button>
+  </div>
+
+  <p-table [value]="categories" [paginator]="true" [rows]="10" stripedRows>
+    <ng-template #header>
+      <tr>
+        <th style="width: 80%">Ad</th>
+        <th style="width: 20%">İşlem</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-category>
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>
+          <p-button
+            icon="pi pi-pencil"
+            severity="secondary"
+            class="mr-2"
+            [routerLink]="['/admin/categories/edit', category.id]"
+          ></p-button>
+          <p-button icon="pi pi-trash" severity="danger" (click)="onDelete(category.id)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

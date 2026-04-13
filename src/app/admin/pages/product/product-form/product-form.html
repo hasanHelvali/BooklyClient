@@ -32,9 +32,10 @@
         <label class="fw-semibold">Kategori</label>
         <p-select
           [options]="categories"
+          optionLabel="name"
+          optionValue="name"
           formControlName="category"
-          placeholder="Kategori seç"
-          styleClass="w-100"
+          placeholder="Kategori Seçin"
         />
       </div>
       <div class="d-flex justify-content-end mt-2">

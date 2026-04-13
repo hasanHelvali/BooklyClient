@@ -10,7 +10,13 @@ export interface SignUpRequest {
   password: string | null;
 }
 
+// export interface TokenResponse {
+//   token: string;
+//   expiresAt: string;
+// }
+
 export interface TokenResponse {
   token: string;
+  refreshToken: string;
   expiresAt: string;
 }
