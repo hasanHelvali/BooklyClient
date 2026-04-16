@@ -3,7 +3,7 @@ export interface CreateProductRequest {
   author: string;
   price: number;
   stock: number;
-  category: string;
+  categoryId: string;
   imageUrl?: string;
 }
 
@@ -13,7 +13,8 @@ export interface ProductResponse {
   author: string;
   price: number;
   stock: number;
-  category: string;
+  categoryId: string;
+  categoryName: string;
   imageUrl?: string;
   isActive: boolean;
 }
@@ -24,6 +25,6 @@ export interface UpdateProductRequest {
   author: string;
   price: number;
   stock: number;
-  category: string;
+  categoryId: string;
   imageUrl: string;
 }

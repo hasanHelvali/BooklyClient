@@ -1,0 +1,45 @@
+<section class="padding-large">
+  <div class="container">
+    <div *ngIf="showOrdered" class="alert alert-success mb-4">
+      Siparişiniz başarıyla oluşturuldu!
+    </div>
+
+    <h3 class="fw-bold mb-4">Siparişlerim</h3>
+
+    <div *ngIf="orders.length === 0" class="text-center py-5">
+      <p class="text-muted fs-5">Henüz siparişiniz yok.</p>
+      <a href="/" class="btn btn-primary mt-3">Alışverişe Başla</a>
+    </div>
+
+    <div *ngFor="let order of orders" class="card mb-4 shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-bold">Sipariş #{{ order.id.slice(0, 8).toUpperCase() }}</span>
+        <span class="badge bg-primary">{{ order.status }}</span>
+        <span class="text-muted">{{ order.orderDate | date: 'dd.MM.yyyy HH:mm' }}</span>
+      </div>
+      <div class="card-body">
+        <table class="table table-sm mb-0">
+          <thead>
+            <tr>
+              <th>Ürün</th>
+              <th>Adet</th>
+              <th>Birim Fiyat</th>
+              <th>Toplam</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of order.items">
+              <td>{{ item.productName }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.unitPrice | currency: '₺' }}</td>
+              <td>{{ item.quantity * item.unitPrice | currency: '₺' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer d-flex justify-content-end fw-bold">
+        Toplam: {{ order.totalAmount | currency: '₺' }}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+<div class="p-4">
+  <p-toast position="top-right" />
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="m-0">Siparişler</h4>
+  </div>
+
+  <p-table [value]="orders" stripedRows>
+    <ng-template #header>
+      <tr>
+        <th style="width: 20%">Müşteri</th>
+        <th style="width: 25%">E-posta</th>
+        <th style="width: 15%">Tarih</th>
+        <th style="width: 10%">Ürün</th>
+        <th style="width: 15%">Tutar</th>
+        <th style="width: 15%">Durum</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-order>
+      <tr>
+        <td>{{ order.customerName }}</td>
+        <td>{{ order.customerEmail }}</td>
+        <td>{{ order.orderDate | date: 'dd.MM.yyyy' }}</td>
+        <td>{{ order.itemCount }}</td>
+        <td>{{ order.totalAmount | currency: '₺' }}</td>
+        <td>
+          <p-select
+            [options]="statuses"
+            [(ngModel)]="order.status"
+            (onChange)="onStatusChange(order, order.status)"
+            appendTo="body"
+          />
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

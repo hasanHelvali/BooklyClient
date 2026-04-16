@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { AdminLayout } from './layout/admin-layout/admin-layout';
 import { adminGuard } from '../core/guards/admin.guard';
+import { UserList } from './pages/user/user-list/user-list';
+import { OrderList } from './pages/order/order-list/order-list';
 
 export const adminRoutes: Routes = [
   {
@@ -40,6 +42,8 @@ export const adminRoutes: Routes = [
         loadComponent: () =>
           import('./pages/category/category-form/category-form').then((m) => m.CategoryForm),
       },
+      { path: 'users', component: UserList },
+      { path: 'orders', component: OrderList },
     ],
   },
 ];

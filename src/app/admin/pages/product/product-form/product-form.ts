@@ -62,7 +62,7 @@ export class ProductForm implements OnInit {
             author: res.author,
             price: res.price,
             stock: res.stock,
-            category: res.category,
+            categoryId: res.categoryId,
           });
         },
         error: (err) => {
@@ -91,7 +91,7 @@ export class ProductForm implements OnInit {
     author: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
     stock: [0, [Validators.required, Validators.min(0)]],
-    category: ['', Validators.required],
+    categoryId: ['', Validators.required],
   });
 
   onSubmit(): void {

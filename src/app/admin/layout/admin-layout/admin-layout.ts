@@ -19,6 +19,8 @@ export class AdminLayout {
     { label: 'Ürünler', icon: 'pi pi-book', routerLink: '/admin/products' },
     { label: 'Kategoriler', icon: 'pi pi-tags', routerLink: '/admin/categories' },
     { label: 'Siparişler', icon: 'pi pi-shopping-cart', routerLink: '/admin/orders' },
+    { label: 'Kullanıcılar', icon: 'pi pi-users', routerLink: '/admin/users' },
+    { label: 'Siparişler', icon: 'pi pi-shopping-bag', routerLink: '/admin/orders' },
   ];
 
   logout(): void {
