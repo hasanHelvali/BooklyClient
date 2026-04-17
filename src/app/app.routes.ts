@@ -19,8 +19,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/my-orders/my-orders/my-orders').then((m) => m.MyOrders),
       },
+      {
+        path: 'products/:id',
+        loadComponent: () =>
+          import('./pages/product-detail/product-detail').then((m) => m.ProductDetail),
+      },
     ],
   },
-  { path: 'auth', loadChildren: () => import('./auth/auth.routes').then((m) => m.authRoutes) },
+  //{ path: 'auth', loadChildren: () => import('./auth/auth.routes').then((m) => m.authRoutes) },
   { path: 'admin', loadChildren: () => import('./admin/admin.routes').then((m) => m.adminRoutes) },
 ];

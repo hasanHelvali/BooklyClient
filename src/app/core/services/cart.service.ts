@@ -8,6 +8,7 @@ export interface CartItem {
   price: number;
   quantity: number;
   imageUrl?: string;
+  stock: number;
 }
 
 // Sepet localStorage'da kullanıcı bazlı tutulur.
@@ -36,6 +37,12 @@ export class CartService {
   addToCart(product: ProductResponse): void {
     const current = this.items();
     const existing = current.find((i) => i.productId === product.id);
+    const currentQuantity = existing ? existing.quantity : 0;
+
+    if (currentQuantity >= product.stock) {
+      alert('Yeterli stok yok.');
+      return;
+    }
 
     if (existing) {
       this.items.set(
@@ -50,6 +57,7 @@ export class CartService {
           price: product.price,
           quantity: 1,
           imageUrl: product.imageUrl,
+          stock: product.stock,
         },
       ]);
     }

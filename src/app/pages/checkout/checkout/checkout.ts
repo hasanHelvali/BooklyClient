@@ -37,7 +37,9 @@ export class Checkout {
     this.orderService.createOrder(request).subscribe({
       next: () => {
         this.cartService.clearCart();
-        this.router.navigate(['/my-orders'], { state: { ordered: true } });
+        this.router.navigate(['/my-orders'], { state: { ordered: true } }).then(() => {
+          window.location.reload();
+        });
       },
       error: (err) => {
         this.isSubmitting = false;

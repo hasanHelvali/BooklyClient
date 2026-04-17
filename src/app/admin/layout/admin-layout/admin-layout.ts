@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-admin-layout',
-  imports: [RouterOutlet, MenuModule, ButtonModule],
+  imports: [RouterOutlet, MenuModule, ButtonModule, RouterLink],
   templateUrl: './admin-layout.html',
   styleUrl: './admin-layout.css',
 })

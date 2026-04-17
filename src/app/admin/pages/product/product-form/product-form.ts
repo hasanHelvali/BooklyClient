@@ -12,6 +12,8 @@ import { ProductService } from '../../../../core/services/product.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CategoryService } from '../../../../core/services/category.service';
 import { CategoryResponse } from '../../../../core/models/category.model';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-product-form',
   imports: [
@@ -22,16 +24,11 @@ import { CategoryResponse } from '../../../../core/models/category.model';
     RouterLink,
     ToastModule,
     InputTextModule,
+    CommonModule,
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
   providers: [MessageService],
-  /* Standalone component'lerde servisler otomatik inject edilemiyor — component'e özel olarak tanımlaman gerekiyor.
-
-  MessageService PrimeNG'nin toast servisdi. providedIn: 'root' ile tanımlı değil, bu yüzden kullanacağın component'in
-  providers dizisine ekliyorsun.
-
-  Yani: "Bu component için MessageService'in bir instance'ını oluştur" demiş oluyorsun. */
 })
 export class ProductForm implements OnInit {
   private fb = inject(FormBuilder);
@@ -40,20 +37,30 @@ export class ProductForm implements OnInit {
   private productService = inject(ProductService);
   private messageService = inject(MessageService);
   private categoryService = inject(CategoryService);
+
   productId: string | null = null;
   categories: CategoryResponse[] = [];
+  isEditMode = false;
+  imageUrl: string | null = null;
+  isUploading = false;
+
+  form = this.fb.nonNullable.group({
+    name: ['', Validators.required],
+    author: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0)]],
+    stock: [0, [Validators.required, Validators.min(0)]],
+    categoryId: ['', Validators.required],
+  });
+
   ngOnInit(): void {
-    // this.messageService.add({
-    //   severity: 'success',
-    //   summary: 'Test',
-    //   detail: 'Toast çalışıyor',
-    // });
     this.categoryService.getAll().subscribe({
       next: (res) => (this.categories = res),
     });
+
     const id = this.route.snapshot.paramMap.get('id');
     this.isEditMode = !!id;
     this.productId = id;
+
     if (id) {
       this.productService.getById(id).subscribe({
         next: (res) => {
@@ -64,79 +71,62 @@ export class ProductForm implements OnInit {
             stock: res.stock,
             categoryId: res.categoryId,
           });
+          this.imageUrl = res.imageUrl || null;
         },
-        error: (err) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Hata',
-            detail: 'Ürün bilgileri yüklenemedi',
-          });
-          console.error(err);
+        error: () => {
+          this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Ürün bilgileri yüklenemedi' });
         },
       });
     }
   }
 
-  isEditMode = false;
-  // categories = [
-  //   { label: 'Roman', value: 'Roman' },
-  //   { label: 'Tarih', value: 'Tarih' },
-  //   { label: 'Fen', value: 'Fen' },
-  //   { label: 'Felsefe', value: 'Felsefe' },
-  //   { label: 'Mantık', value: 'Mantık' },
-  // ];
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
 
-  form = this.fb.nonNullable.group({
-    name: ['', Validators.required],
-    author: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]],
-    stock: [0, [Validators.required, Validators.min(0)]],
-    categoryId: ['', Validators.required],
-  });
+    const file = input.files[0];
+    this.isUploading = true;
+
+    this.productService.uploadImage(file).subscribe({
+      next: (res) => {
+        this.imageUrl = res.url;
+        this.isUploading = false;
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Hata', detail: 'Görsel yüklenemedi' });
+        this.isUploading = false;
+      },
+    });
+  }
 
   onSubmit(): void {
     if (this.form.invalid) return;
+
     if (this.isEditMode) {
       const data: UpdateProductRequest = {
-        id: this.productId,
-        ...(this.form.getRawValue() as any),
+        id: this.productId!,
+        ...this.form.getRawValue(),
+        imageUrl: this.imageUrl || '',
       };
       this.productService.update(data).subscribe({
         next: () => {
           this.router.navigate(['/admin/products'], { state: { updated: true } });
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Başarılı',
-            detail: 'Ürün güncellendi',
-          });
         },
         error: (err: HttpErrorResponse) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Hata',
-            detail: `${err.error.error || 'Ürün güncellenemedi'}`,
-          });
-          console.error('Product update failed:', err);
+          this.messageService.add({ severity: 'error', summary: 'Hata', detail: err.error?.message || 'Ürün güncellenemedi' });
         },
       });
     } else {
-      const data = this.form.getRawValue() as CreateProductRequest;
+      const data: CreateProductRequest = {
+        ...this.form.getRawValue(),
+        imageUrl: this.imageUrl || undefined,
+      };
       this.productService.create(data).subscribe({
         next: () => {
           this.router.navigate(['/admin/products'], { state: { created: true } });
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Başarılı',
-            detail: 'Ürün oluşturuldu',
-          });
         },
         error: (err: HttpErrorResponse) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Hata',
-            detail: `${err.error.error || 'Ürün oluşturulamadı'}`,
-          });
-          console.error('Product creation failed:', err);
+          this.messageService.add({ severity: 'error', summary: 'Hata', detail: err.error?.message || 'Ürün oluşturulamadı' });
         },
       });
     }

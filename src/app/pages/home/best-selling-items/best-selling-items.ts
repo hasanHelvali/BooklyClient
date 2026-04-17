@@ -18,7 +18,7 @@ export class BestSellingItems implements OnInit {
   products: ProductResponse[] = [];
 
   ngOnInit(): void {
-    this.productService.getALL().subscribe({
+    this.productService.getBestSelling(10).subscribe({
       next: (res) => {
         this.products = res;
         this.cdr.detectChanges();
@@ -36,7 +36,7 @@ export class BestSellingItems implements OnInit {
               1500: { slidesPerView: 5 },
             },
           });
-        }, 0);
+        }, 100);
       },
     });
   }

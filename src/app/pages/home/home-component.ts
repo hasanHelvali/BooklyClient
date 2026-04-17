@@ -5,7 +5,6 @@ import { BestSellingItems } from './best-selling-items/best-selling-items';
 import { LimitedOffer } from './limited-offer/limited-offer';
 import { ItemsListing } from './items-listing/items-listing';
 import { Categories } from './categories/categories';
-import { CustomersReviews } from './customers-reviews/customers-reviews';
 import { LatestPosts } from './latest-posts/latest-posts';
 import { Social } from './social/social';
 
@@ -18,7 +17,6 @@ import { Social } from './social/social';
     LimitedOffer,
     ItemsListing,
     Categories,
-    CustomersReviews,
     LatestPosts,
     Social,
   ],

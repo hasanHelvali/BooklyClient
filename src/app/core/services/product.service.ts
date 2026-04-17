@@ -33,4 +33,16 @@ export class ProductService {
   delete(id: string): Observable<any> {
     return this.http.delete(`${this.productUrl}/DeleteProductById/${id}`);
   }
+
+  uploadImage(file: File): Observable<{ url: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<{ url: string }>(`${this.productUrl}/UploadImage`, formData);
+  }
+
+  getBestSelling(count: number = 10): Observable<ProductResponse[]> {
+    return this.http.get<ProductResponse[]>(
+      `${this.productUrl}/GetBestSellingProducts?count=${count}`,
+    );
+  }
 }
